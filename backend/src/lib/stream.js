@@ -24,7 +24,7 @@ export const upsertStreamUser = async (userData) => {   //upsert means update or
 //take user from clerk and delete from stream chat, this is for the user deleted event in inngest function
 export const deleteStreamUser = async (userId) => {   //upsert means update or insert, if the user already exists it will update the user data, if not it will create a new user
     try {
-        await streamClient.deleteUser([userId])
+        await streamClient.deleteUser(userId)
         console.log("User deleted from Stream Chat:", userId)
     } catch (error) {
         console.error("Error deleting user from Stream Chat:", error)
