@@ -13,6 +13,8 @@
   "description": "",
   "dependencies": {
     "@clerk/express": "^2.0.4",
+    "@stream-io/node-sdk": "^0.7.49",
+    "@stream-io/video-client": "^1.44.5",
     "codemeet": "file:..",
     "cors": "^2.8.6",
     "dotenv": "^17.3.1",
