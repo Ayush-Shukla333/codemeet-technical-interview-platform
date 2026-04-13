@@ -5,15 +5,18 @@ import Homepage from './pages/HomePage'
 import ProblemsPage from './pages/ProblemsPage'
 import { useUser } from '@clerk/clerk-react'
 import { Toaster } from 'react-hot-toast'
+import DashboardPage from './pages/DashboardPage'
 
 function App() {
 
-  const {isSignedIn} = useUser()
+  const {isSignedIn, isLoaded} = useUser()
 
+  if (!isLoaded) return null; //this is to prevent flickering of pages while clerk is loading the user state
   return (
     <>
     <Routes>
-      <Route path="/" element={<Homepage />} />
+      <Route path="/" element={!isSignedIn ? <Homepage /> : <Navigate to = {"/dashboard"} />}/>
+      <Route path = "/dashboard" element={isSignedIn ? <DashboardPage /> : <Navigate to={"/"} />} />
       <Route path="/problems" element={isSignedIn ? <ProblemsPage /> : <Navigate to={"/"} />} />
     </Routes>
 
