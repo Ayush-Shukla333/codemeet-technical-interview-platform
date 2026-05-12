@@ -5,6 +5,7 @@ import ProblemDetail from './pages/ProblemDetail.jsx'  // Add this line
 import { useUser } from '@clerk/clerk-react'
 import { Toaster } from 'react-hot-toast'
 import DashboardPage from './pages/DashboardPage.jsx'
+import SessionPage from './pages/SessionPage.jsx'
 
   function App() {
 
@@ -18,6 +19,7 @@ import DashboardPage from './pages/DashboardPage.jsx'
         <Route path = "/dashboard" element={isSignedIn ? <DashboardPage /> : <Navigate to={"/"} />} />
         <Route path="/problems" element={isSignedIn ? <ProblemsPage /> : <Navigate to={"/"} />} />
         <Route path="/problems/:id" element={isSignedIn ? <ProblemDetail/> : <Navigate to={"/"} />} />
+        <Route path="/session/:id" element={isSignedIn ? <SessionPage/> : <Navigate to={"/"} />} />
       </Routes>
 
       <Toaster toastOptions={{ duration: 3000 }} />

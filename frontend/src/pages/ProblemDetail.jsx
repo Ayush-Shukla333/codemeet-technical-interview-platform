@@ -54,29 +54,25 @@ function ProblemDetail() {
 
     //this is necessary because the output from the code execution may contain extra whitespace or newlines, so we need to normalise it before comparing it with the expected output for the current problem
     const normaliseOutput = (output) => {
-        return output
-            .trim()
-            .split("\n")
-            .map((line) =>
-                line
-                    .trim()
-                    // remove spaces after [ and before ]
-                    .replace(/\[\s+/g, "[")
-                    .replace(/\s+\]/g, "]")
-                    // normalize spaces around commas to single space after comma
-                    .replace(/\s*,\s*/g, ",")
-            )
-            .filter((line) => line.length > 0)
-            .join("\n");
-
-    };
-
+    return output
+        .trim()
+        .replace(/'/g, '"') // ✅ fix quotes
+        .replace(/\s+/g, "") // ✅ remove ALL spaces
+};
     const checkIfTestsPassed = (actualOutput, expectedOutput) => {
-        const normalisedActual = normaliseOutput(actualOutput);
-        const normalisedExpected = normaliseOutput(expectedOutput);
+    try {
+        const cleanActual = actualOutput
+            .trim()
+            .replace(/'/g, '"');
 
-        return normalisedActual === normalisedExpected;
-    };
+        const parsedActual = JSON.parse(cleanActual);
+        const parsedExpected = JSON.parse(expectedOutput);
+
+        return JSON.stringify(parsedActual) === JSON.stringify(parsedExpected);
+    } catch (e) {
+        return false;
+    }
+};
 
     const handleRunCode = async () => {
         setIsRunning(true);
@@ -99,7 +95,7 @@ function ProblemDetail() {
             }
         }
         else {
-            toast.error("Code execution failed!");
+            toast.error(result.error || "Code execution failed!");
         }
     };
 
