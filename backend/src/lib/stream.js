@@ -10,7 +10,10 @@ if (!apiKey || !apiSecret) {
 }
 
 export const streamClient = StreamChat.getInstance(apiKey, apiSecret);  //These are required to confirm the interaction with the exact same application. will be used for chat features
-export const videoClient = new StreamVideoClient(apiKey, apiSecret); // used for video calls
+export const videoClient = new StreamVideoClient({
+  apiKey,
+  secret: apiSecret
+});
 
 
 //take user from clerk and sync with stream chat, this is for the user created event in inngest function
